@@ -3,22 +3,25 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Cineclube ISEL · Clube de Cinema do Instituto Superior de Engenharia de Lisboa</title>
-        <meta name="title" content="Cineclube ISEL · Clube de Cinema do Instituto Superior de Engenharia de Lisboa" />
+        <title>Cineclube ISEL</title>
+        <meta name="title" content="Cineclube ISEL" />
+        <meta name="description" content="Clube de Cinema do Instituto Superior de Engenharia de Lisboa" />
 
         <!-- Open Graph / Facebook -->
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://cineclubeisel.bernzrdo.wtf/" />
-        <meta property="og:title" content="Cineclube ISEL · Clube de Cinema do Instituto Superior de Engenharia de Lisboa" />
-        <meta property="og:image" content="https://cineclubeisel.bernzrdo.wtf/social.png" />
+        <meta property="og:title" content="Cineclube ISEL" />
+        <meta property="og:description" content="Clube de Cinema do Instituto Superior de Engenharia de Lisboa" />
+        <meta property="og:image" content="https://cineclubeisel.bernzrdo.wtf/assets/social.png" />
 
-        <!-- X (Twitter) -->
+        <!-- Twitter -->
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://cineclubeisel.bernzrdo.wtf/" />
-        <meta property="twitter:title" content="Cineclube ISEL · Clube de Cinema do Instituto Superior de Engenharia de Lisboa" />
-        <meta property="twitter:image" content="https://cineclubeisel.bernzrdo.wtf/social.png" />
+        <meta property="twitter:title" content="Cineclube ISEL" />
+        <meta property="twitter:description" content="Clube de Cinema do Instituto Superior de Engenharia de Lisboa" />
+        <meta property="twitter:image" content="https://cineclubeisel.bernzrdo.wtf/assets/social.png" />
 
-        <link rel="icon" type="image/png" href="https://cineclubeisel.bernzrdo.wtf/icons/icon_001.png">
+        <link rel="icon" type="image/png" href="https://cineclubeisel.bernzrdo.wtf/assets/icons/icon_001.png">
 
         <!-- Google Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,29 +31,39 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <video autoplay muted loop playsinline>
-            <source src="background.webm" type="video/webm">
-            <source src="background.mp4" type="video/mp4">
-        </video>
         <header>
-            <img src="logos/logo_001.svg" alt="Cineclube ISEL">
-            <h1>Cineclube ISEL</h1>
+            <img src="assets/logos/logo_001.svg" alt="Cineclube ISEL">
         </header>
-        <main>
-            <h2>Vem aí o núcleo de cinema do ISEL!</h2>
-            <a class="btn" href="https://tally.so/r/7RjrXA">Torna-te membro!</a>
-            <p>Estamos a criar um espaço onde os membros do ISEL puderam explorar o mundo do cinema. Iremos ter sessões de cinema para conheceres e conectares com colegas com gostos em comum. Queres manter-te a par das novidades deste núcleo? <a href="https://tally.so/r/7RjrXA">Torna-te membro!</a></p>
-        </main>
-        <footer>
+        <div class="hero">
             <a class="credits" target="_blank"></a>
-            <nav>
-                <a href="https://www.instagram.com/cineclubeisel/" target="_blank">Instagram</a>
-                &middot;
-                <a href="https://letterboxd.com/cineclubeisel/" target="_blank">Letterboxd</a>
-                &middot;
-                <a href="https://github.com/cineclubeisel/" target="_blank">GitHub</a>
-            </nav>
-        </footer>
+            <video autoplay muted loop playsinline>
+                <source src="assets/background.webm" type="video/webm">
+                <source src="assets/background.mp4" type="video/mp4">
+            </video>
+        </div>
+        <a class="member-link" href="https://tally.so/r/7RjrXA">
+            <div class="cta">
+                <h1>Junta-te ao<br>Cineclube ISEL!</h1>
+                <p>Sejas do ISEL ou de fora, o Cineclube é para todos.</p>
+            </div>
+            <div class="benefits">
+                <div>
+                    <h2>Escolhe o cartaz</h2>
+                    <p>Sugere e vota nos filmes que vamos ver.</p>
+                </div>
+                <div>
+                    <h2>Não percas nada</h2>
+                    <p>Vota na direção ou candidata-te tu mesmo.</p>
+                    <p class="sub">(só se quiseres, zero spam)</p>
+                </div>
+                <div>
+                    <h2>Faz a diferença</h2>
+                    <p>Vota na direção ou candidata-te tu mesmo.</p>
+                </div>
+            </div>
+            <div class="btn">Quero ser membro!</div>
+            <div class="hint">Sem custos, demora menos de um minuto.</div>
+        </a>
         <script src="script.js"></script>
     </body>
 </html>

@@ -16,8 +16,8 @@ function randomLogo(){
     const logoIndex = (Math.floor(Math.random() * 319) + 1)
         .toString().padStart(3, '0')
     
-    $icon.href = `icons/icon_${logoIndex}.png`    
-    $logo.src = `logos/logo_${logoIndex}.svg`
+    $icon.href = `assets/icons/icon_${logoIndex}.png`    
+    $logo.src = `assets/logos/logo_${logoIndex}.svg`
 
 }
 randomLogo()
