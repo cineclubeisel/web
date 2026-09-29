@@ -1,0 +1,162 @@
+---
+import { getCollection } from "astro:content";
+import SectionTitle from "../components/SectionTitle.astro";
+import HeroEvent from "../layouts/HeroEvent.astro";
+import { IconCalendarEvent, IconUsers } from "@tabler/icons-astro";
+import { capitalize } from "../util";
+
+const events = await getCollection("events");
+
+const [, ...archive] = events.toSorted(
+    (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+
+const dtf = new Intl.DateTimeFormat("pt-PT", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+});
+---
+
+<HeroEvent title="Eventos">
+    <SectionTitle id="arquivo">Arquivo de Eventos</SectionTitle>
+    {
+        archive.length === 0 && (
+            <div class="hint">Não há mais eventos (por agora...)</div>
+        )
+    }
+    {
+        archive.map((event) => {
+            const startDate = event.data.date;
+            const endDate = new Date(startDate.getTime());
+            endDate.setMinutes(endDate.getMinutes() + event.data.duration);
+
+            return (
+                <a
+                    href={`/evento/${event.id}`}
+                    class="archived-event"
+                    style={`--img: url('${event.data.movie.backdrop.src}')`}
+                >
+                    <div
+                        class="poster"
+                        style={{
+                            backgroundImage: `url('${event.data.movie.poster.src}')`,
+                        }}
+                    />
+                    <div class="info">
+                        <h2>
+                            {event.data.movie.title}&nbsp;
+                            <span class="year">({event.data.movie.year})</span>
+                        </h2>
+                        <div>
+                            <IconCalendarEvent />
+                            {capitalize(dtf.formatRange(startDate, endDate))}
+                        </div>
+                        <div>
+                            <IconUsers />
+                            {event.data.after!.attendance} espetador
+                            {event.data.after!.attendance !== 1 ? "es" : ""}
+                        </div>
+                    </div>
+                </a>
+            );
+        })
+    }
+</HeroEvent>
+
+<style>
+    .hint {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        flex-grow: 1;
+
+        padding: 0.5rem;
+        color: #fff8;
+    }
+
+    .archived-event {
+
+        position: relative;
+
+        display: flex;
+        align-items: end;
+        padding: .5rem;
+        gap: 1rem;
+
+        text-decoration: none;
+
+        border-radius: 1rem;
+        border: 2px solid #fff3;
+
+        &::before {
+            content: "";
+
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            width: calc(100% + 4px);
+            height: calc(100% + 4px);
+            z-index: -1;
+
+            background-image: linear-gradient(#0005, #0008), var(--img);
+            background-position: center;
+            background-size: cover;
+            filter: grayscale(1);
+
+            border-radius: 1rem;
+
+        }
+
+        .poster {
+
+            position: relative;
+
+            aspect-ratio: 2 / 3;
+            height: 10rem;
+            
+            background-size: cover;
+            background-position: center;
+
+            border-radius: .5rem;
+
+            &::before {
+                content: '';
+
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: calc(100% - 4px);
+                height: calc(100% - 4px);
+
+                border-radius: .5rem;
+                border: 2px solid #fff3;
+
+            }
+
+        }
+
+        .info {
+
+            display: flex;
+            flex-direction: column;
+            gap: .5rem;
+
+            h2 .year {
+                color: #fff8;
+            }
+
+            div {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+        }
+
+    }
+</style>

@@ -1,0 +1,284 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import Backdrop from "../../components/Backdrop.astro";
+import { IconCalendarEvent, IconLanguage, IconMapPin, IconMasksTheater, IconStar, IconUsers } from "@tabler/icons-astro";
+import iso6391 from "../../iso-639-1";
+import { AGE_RATINGS, capitalize } from "../../util";
+
+export async function getStaticPaths() {
+    const events = await getCollection("events");
+    return events.map((event) => ({
+        params: { id: event.id },
+        props: { event },
+    }));
+}
+
+const { event } = Astro.props;
+
+const genres = event.data.movie.genre;
+let genreStr: string = genres.at(-1)!;
+if (genres.length > 1) {
+    genreStr = `${genres.slice(0, genres.length - 1).join(", ")} e ${genreStr}`;
+}
+genreStr = capitalize(genreStr)
+
+const lang = {
+    audio: iso6391[event.data.movie.language.audio],
+    subtitles: event.data.movie.language.subtitles
+        ? iso6391[event.data.movie.language.subtitles]
+        : undefined,
+};
+
+const dtf = new Intl.DateTimeFormat("pt-PT", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+});
+
+const startDate = event.data.date;
+const endDate = new Date(startDate.getTime());
+endDate.setMinutes(endDate.getMinutes() + event.data.duration);
+
+const rating = event.data.after
+    ? (event.data.after.ratings.reduce((a, b) => a + b) / event.data.after.ratings.length)
+    : 0
+
+---
+
+<Layout
+    title={`${event.data.movie.title} (${event.data.movie.year})`}
+    headerTitle="Evento"
+    description={event.body}
+    socialImg={event.data.movie.backdrop.src}
+>
+    <Backdrop src={event.data.movie.backdrop.src} />
+    <main>
+        <div class="hero">
+            <div
+                class="poster"
+                style={{
+                    backgroundImage: `url('${event.data.movie.poster.src}')`,
+                }}
+            >
+            </div>
+            <div class="title">
+                <h1>
+                    {event.data.movie.title}&nbsp;
+                    <span class="year">({event.data.movie.year})</span>
+                </h1>
+                <div class="details">
+                    <span class="director">
+                        Realizado por&nbsp;
+                        <a
+                            href={`https://pt.wikipedia.org/wiki/${encodeURIComponent(event.data.movie.director)}`}
+                            target="_blank"
+                        >
+                            {event.data.movie.director}
+                        </a>
+                    </span>
+                    <span class="age-rating" title={AGE_RATINGS[event.data.movie.ageRating]}>{event.data.movie.ageRating}</span>
+                </div>
+            </div>
+        </div>
+        <div class="details">
+            <div class="detail">
+                <IconCalendarEvent />
+                <div>
+                    <h4>Data</h4>
+                    <span>{capitalize(dtf.formatRange(startDate, endDate))}</span>
+                </div>
+            </div>
+            <div class="detail">
+                <IconMapPin />
+                <div>
+                    <h4>Localização</h4>
+                    <span>{event.data.location}, ISEL</span>
+                </div>
+            </div>
+            <div class="detail">
+                <IconMasksTheater />
+                <div>
+                    <h4>Género{event.data.movie.genre.length !== 1 ? "s" : ""}</h4>
+                    <span>{genreStr}</span>
+                </div>
+            </div>
+            <div class="detail">
+                <IconLanguage />
+                <div>
+                    <h4>Linguagem</h4>
+                    <span>
+                        Falado em {lang.audio}
+                        {
+                            lang.subtitles ? (
+                                <> com legendas em {lang.subtitles}</>
+                            ) : (
+                                <> sem legendas</>
+                            )
+                        }
+                    </span>
+                </div>
+            </div>
+            { event.data.after && <>
+                <div class="detail">
+                    <IconUsers />
+                    <div>
+                        <h4>Espetadores</h4>
+                        <span>{event.data.after.attendance}</span>
+                    </div>
+                </div>
+                <div class="detail">
+                    <IconStar />
+                    <div>
+                        <h4>Avaliação média</h4>
+                        <span>{rating.toFixed(2)} estrelas</span>
+                    </div>
+                </div>
+            </> }
+        </div>
+        {event.body && <p>{event.body}</p>}
+        {
+            event.data.movie.trailer && (
+                <iframe
+                    src={event.data.movie.trailer}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen
+                />
+            )
+        }
+        <div class="links">
+            <a href={event.data.movie.links.letterboxd} target="_blank">Letterboxd</a>
+            <a href={event.data.movie.links.tmdb} target="_blank">TMDB</a>
+            <a href={event.data.movie.links.imdb} target="_blank">IMDb</a>
+        </div>
+    </main>
+</Layout>
+
+<style>
+    main {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        padding: 1rem;
+        margin-top: -10rem;
+        gap: 1rem;
+
+        .hero {
+            display: flex;
+            align-items: end;
+            gap: 1rem;
+
+            .poster {
+                position: relative;
+
+                aspect-ratio: 2 / 3;
+                height: 15rem;
+                flex-shrink: 0;
+                border-radius: 1rem;
+
+                background-size: cover;
+                background-position: center;
+
+                &::before {
+                    content: "";
+
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: calc(100% - 4px);
+                    height: calc(100% - 4px);
+
+                    border: 2px solid #fff3;
+                    border-radius: 1rem;
+                }
+            }
+
+            .title {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+
+                h1 {
+                    font-size: 2.5rem;
+                    .year {
+                        color: #fff8;
+                    }
+                }
+
+                .details {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 0.5rem;
+
+                    .director {
+                        color: #fff8;
+                        a {
+                            color: #fffb;
+                        }
+                    }
+
+                    .age-rating {
+                        color: #000;
+                        background-color: #fffb;
+                        font-weight: bold;
+                        font-size: 0.9rem;
+                        padding: 0.2rem 0.3rem;
+                        border-radius: 0.3rem;
+                    }
+                }
+            }
+        }
+
+        .details {
+
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+
+            .detail {
+
+                display: flex;
+                align-items: center;
+                gap: .5rem;
+                flex-grow: 1;
+
+                svg {
+                    width: 2rem;
+                    height: 2rem;
+                }
+
+                div {
+                    
+                    display: flex;
+                    flex-direction: column;
+                    gap: .5rem;
+
+
+                }
+
+            }
+        }
+
+        p {
+            color: #fffc;
+        }
+
+        iframe {
+            border: 2px solid #fff3;
+            border-radius: 1rem;
+            aspect-ratio: 16 / 9;
+        }
+
+        .links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: end;
+            gap: .5rem;
+            color: #fff8;
+        }
+    }
+</style>

@@ -1,0 +1,21 @@
+{
+  "name": "cineclubeisel",
+  "version": "0.0.1",
+  "dependencies": {
+    "@tabler/icons-astro": "^3.48.0",
+    "astro": "^7.3.5"
+  },
+  "allowScripts": {
+    "esbuild": true
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "type": "module"
+}

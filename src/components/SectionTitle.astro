@@ -1,0 +1,17 @@
+---
+const { class: className, id } = Astro.props
+---
+
+<h2 class={`section-title ${className ?? ''}`} id={ id }>
+    <slot/>
+</h2>
+
+<style>
+    
+    .section-title {
+        font-size: 1.3rem;
+        padding-top: 1rem;
+        text-shadow: 0 0 5px #0008;
+    }
+
+</style>

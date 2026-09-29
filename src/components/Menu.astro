@@ -1,0 +1,146 @@
+---
+import { IconCalendarWeek, IconFileText, IconHome } from '@tabler/icons-astro'
+
+const path = decodeURIComponent(Astro.url.pathname.replace(/\/$/, ''))
+
+const navItems = [
+    { href: '/',            label: 'Início',      icon: IconHome },
+    { href: '/eventos',     label: 'Eventos',     icon: IconCalendarWeek },
+    // TODO: finish other pages
+    // { href: '/publicações', label: 'Publicações', icon: IconNews },
+    // { href: '/sobre',       label: 'Sobre',       icon: IconInfoCircle },
+    // { href: '/regulamento', label: 'Regulamento', icon: IconFileText },
+    { href: 'https://raw.githubusercontent.com/cineclubeisel/docs/refs/heads/main/Regulamento.pdf', label: 'Regulamento', icon: IconFileText },
+]
+
+---
+
+<menu class="off">
+    {navItems.map(({ href, label, icon: Icon })=>(
+        <a
+            href={href}
+            class:list={[{
+                active: (path === href) || (href === '/' && path === '')
+            }]}
+            target={ !href.startsWith('/') ? '_blank' : undefined }
+        >
+            <div class="icon"><Icon/></div>
+            {label}
+        </a>
+    ))}
+    <div class="socials">
+        <a href="https://www.instagram.com/cineclubeisel/" target="_blank">Instagram</a>
+        <a href="https://www.linkedin.com/company/cineclubeisel/" target="_blank">LinkedIn</a>
+        <a href="https://github.com/cineclubeisel/" target="_blank">GitHub</a>
+    </div>
+</menu>
+
+<style>
+
+    menu {
+
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: calc(100% - 2rem);
+
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+        padding-top: calc(5rem + 2rem);
+        margin: 0;
+        
+        background-color: var(--color);
+        font-size: 1.2rem;
+
+        /* TODO: make better responsiveness*/
+        max-width: calc(800px - 2rem);
+        left: 50%;
+        translate: -50% 0;
+
+        transition: translate .3s;
+
+        z-index: 1;
+
+        &::before {
+            content: '';
+
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            height: 1.5rem;
+
+            background-color: var(--color);
+            clip-path: polygon(0 0, 0% 100%, 100% 0);
+
+        }
+
+        &.off {
+            translate: 0 calc(-100% - 1.5rem);
+            /* TODO: make better responsiveness*/
+            translate: -50% calc(-100% - 1.5rem);
+            pointer-events: none;
+        }
+
+        & > a {
+
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+
+            text-decoration: none;
+
+            .icon {
+
+                position: relative;
+                display: flex;
+
+                svg {
+                    width: 2rem;
+                    height: 2rem;
+                }
+
+            }
+
+            &.active {
+
+                font-weight: bold;
+
+                .icon {
+
+                    color: var(--color);
+
+                    &::before {
+                        content: '';
+
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        translate: -50% -50%;
+
+                        width: 2.5rem;
+                        height: 2.5rem;
+                        background-color: #fff;
+                        z-index: -1;
+
+                        rotate: -10deg;
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        .socials {
+            display: flex;
+            gap: 1rem;
+            color: #ffffffbf;
+        }
+
+    }
+
+</style>

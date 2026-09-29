@@ -1,0 +1,52 @@
+---
+const { src } = Astro.props
+---
+
+<div
+    class="backdrop"
+    style={{
+        backgroundImage: `url('${src}')`,
+    }}
+/>
+
+<style>
+
+    .backdrop {
+        position: relative;
+        width: 100%;
+        height: 300px;
+        background-position: center;
+        background-size: cover;
+        z-index: -1;
+
+        &::before {
+            content: "";
+
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+
+            background-image: linear-gradient(
+                hsla(0, 0%, 0%, 0) 0%,
+                hsla(0, 0%, 0%, 0.006) 10%,
+                hsla(0, 0%, 0%, 0.025) 19.9%,
+                hsla(0, 0%, 0%, 0.055) 29.6%,
+                hsla(0, 0%, 0%, 0.096) 39.1%,
+                hsla(0, 0%, 0%, 0.146) 48.1%,
+                hsla(0, 0%, 0%, 0.205) 56.8%,
+                hsla(0, 0%, 0%, 0.272) 64.9%,
+                hsla(0, 0%, 0%, 0.347) 72.4%,
+                hsla(0, 0%, 0%, 0.428) 79.2%,
+                hsla(0, 0%, 0%, 0.514) 85.2%,
+                hsla(0, 0%, 0%, 0.605) 90.3%,
+                hsla(0, 0%, 0%, 0.7) 94.4%,
+                hsla(0, 0%, 0%, 0.798) 97.5%,
+                hsla(0, 0%, 0%, 0.898) 99.3%,
+                hsl(0, 0%, 0%) 100%
+            );
+        }
+    }
+    
+</style>

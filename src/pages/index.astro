@@ -1,0 +1,207 @@
+---
+import HeroEvent from "../layouts/HeroEvent.astro";
+import benefit1 from "../assets/benefit1.png";
+import benefit2 from "../assets/benefit2.png";
+import benefit3 from "../assets/benefit3.png";
+---
+
+<HeroEvent>
+    <div class="member">
+        <div class="hero">
+            <h1>Junta-te ao<br />Cineclube ISEL!</h1>
+            <span>Sejas do ISEL ou de fora, o Cineclube é para todos.</span>
+        </div>
+        <div class="card" style={`--img: url('${benefit1.src}')`}>
+            <div class="front">
+                <h2>Escolhe o cartaz</h2>
+                <div>Sugere e vota nos filmes que vamos ver.</div>
+            </div>
+            <div class="back">
+                Ao seres membro do Cineclube ISEL, poderás sugerir filmes para
+                as nossas sessões e votar no filme escolhido.
+            </div>
+        </div>
+        <div class="card" style={`--img: url('${benefit2.src}')`}>
+            <div class="front">
+                <h2>Não percas nada</h2>
+                <div>Recebe as novidades em primeira mão.</div>
+                <div class="hint">(só se quiseres, zero spam)</div>
+            </div>
+            <div class="back">
+                Ao seres membro do Cineclube ISEL, terás acesso a um canal onde
+                receberás as novidades de imediato, sempre com a opção de ativar
+                ou desativar estas notificações quando quiseres.
+            </div>
+        </div>
+        <div class="card" style={`--img: url('${benefit3.src}')`}>
+            <div class="front">
+                <h2>Faz a diferença</h2>
+                <div>Vota na direção ou candidata-te tu mesmo.</div>
+            </div>
+            <div class="back">
+                Ao seres membro do Cineclube ISEL, poderás fazer parte da
+                direção do núcleo ou votar na que preferires.
+            </div>
+        </div>
+        <a href="https://tally.so/r/7RjrXA" target="_blank" class="btn"
+            >Quero ser membro!</a
+        >
+        <div class="hint">Sem custos, demora menos de um minuto.</div>
+    </div>
+</HeroEvent>
+
+<style>
+    .member {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+        perspective: 1000px;
+
+        .hero {
+            position: relative;
+            padding: 2rem 0.5rem;
+
+            &::before {
+                content: "";
+
+                position: absolute;
+                top: 0;
+                left: -1rem;
+                width: calc(100% + 2rem);
+                height: 125%;
+                z-index: -1;
+
+                background-image: linear-gradient(
+                    rgb(from var(--color) r g b / 0) 0%,
+                    rgb(from var(--color) r g b / 0.5) 80%,
+                    rgb(from var(--color) r g b / 0) 100%
+                );
+                clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%);
+            }
+
+            h1 {
+                font-size: min(12vw, 3rem);
+                text-shadow: 0 0 15px #fffa;
+            }
+
+            span {
+                font-size: 1.2rem;
+                color: #fffa;
+            }
+        }
+
+        .card {
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: 1fr;
+
+            position: relative;
+            border-radius: 1rem;
+            padding: 2rem;
+            min-height: 100px;
+
+            background-image: linear-gradient(#0003, #0003), var(--img);
+            background-size: cover;
+            background-position: center;
+
+            transition: transform 0.5s ease-in-out;
+
+            cursor: pointer;
+
+            font-size: 1.2rem;
+            line-height: 1em;
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            &::before {
+                content: "";
+
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: calc(100% - 4px);
+                height: calc(100% - 4px);
+
+                border: 2px solid #fff3;
+                border-radius: 1rem;
+            }
+
+            .front,
+            .back {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+
+                grid-area: 1 / 1;
+                transition: opacity 0.5s cubic-bezier(1, 0, 0, 1);
+            }
+
+            .back {
+                opacity: 0;
+                pointer-events: none;
+                transform: rotateY(0.5turn);
+            }
+
+            &.flip {
+                transform: rotateY(0.5turn);
+
+                .front {
+                    opacity: 0;
+                    pointer-events: none;
+                }
+
+                .back {
+                    opacity: 1;
+                    pointer-events: unset;
+                }
+            }
+        }
+
+        .btn {
+            padding: 0.75rem;
+            border-radius: 1rem;
+
+            border: 2px solid #fff3;
+            background-image: linear-gradient(#fff4, #fff0);
+            background-color: var(--color);
+
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .hint {
+            color: #fff8;
+        }
+    }
+</style>
+
+<script>
+
+
+    // member card turn
+
+    let timeooutMap = new Map<HTMLDivElement, number>();
+
+    function flip($card: HTMLDivElement) {
+        if (timeooutMap.has($card)) clearTimeout(timeooutMap.get($card));
+
+        $card.classList.toggle("flip");
+    }
+
+    const $cards = [
+        ...document.querySelectorAll<HTMLDivElement>(".member .card"),
+    ];
+    for (const $card of $cards) {
+        $card.addEventListener("click", function () {
+            for (const $card of $cards) {
+                if ($card === this || $card.classList.contains("flip"))
+                    flip($card);
+            }
+        });
+    }
+</script>

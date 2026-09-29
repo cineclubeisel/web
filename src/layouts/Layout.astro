@@ -1,0 +1,147 @@
+---
+import Header from '../components/Header.astro'
+import Menu from '../components/Menu.astro'
+
+const {
+    title,
+    headerTitle,
+    description,
+    socialImg
+} = Astro.props
+---
+
+<!doctype html>
+<html lang="pt">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width"/>
+        <meta name="generator" content={Astro.generator}/>
+        <title>{ title ? `${title} · ` : '' }Cineclube ISEL</title>
+        <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+        <meta name="title" content={ title ?? 'Cineclube ISEL' } />
+        <meta name="description" content={ description ?? 'Clube de Cinema do Instituto Superior de Engenharia de Lisboa' } />
+
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`https://cineclubeisel.pt${Astro.url.pathname.replace(/\/$/, '')}`} />
+        <meta property="og:title" content={ title ?? 'Cineclube ISEL' } />
+        <meta property="og:description" content={ description ?? 'Clube de Cinema do Instituto Superior de Engenharia de Lisboa' } />
+        <meta property="og:image" content={ socialImg ?? `https://cineclubeisel.pt/assets/social.png`} />
+
+        <!-- Twitter -->
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content={`https://cineclubeisel.pt${Astro.url.pathname.replace(/\/$/, '')}`} />
+        <meta property="twitter:title" content={ title ?? 'Cineclube ISEL' } />
+        <meta property="twitter:description" content={ description ?? 'Clube de Cinema do Instituto Superior de Engenharia de Lisboa' } />
+        <meta property="twitter:image" content={ socialImg ?? `https://cineclubeisel.pt/assets/social.png`} />
+
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Young+Serif&display=swap" rel="stylesheet">
+
+    </head>
+    <body>
+        <div id="app">
+            <Header title={headerTitle ?? title}/>
+            <Menu/>
+            <slot/>
+        </div>
+    </body>
+</html>
+
+<script>
+    
+    const SHAPE_COUNT = 40
+    const shapes: Record<string, string> = import.meta.glob('/src/assets/shapes/*.svg', {
+        eager: true,
+        query: '?raw',
+        import: 'default'
+    })
+    const colors = [ '#E63264', '#FF82EB', '#BECD00', '#0087FF', '#37CD28', '#FF8C00', '#AA5AA0', '#5FB496' ]
+    
+    // randomize shape and color
+    const shapeIndex = Math.floor(Math.random() * SHAPE_COUNT) + 1
+    const shape = shapes[`/src/assets/shapes/shape-${shapeIndex}.svg`]
+    const color = colors[Math.floor(Math.random() * colors.length)]
+
+    // set color
+    document.body.style.setProperty('--color', color)
+
+    // set shape
+    const $placeholder = document.querySelector<SVGSVGElement>('.logo svg:first-child')!
+    const $shape = new DOMParser()
+        .parseFromString(shape, 'image/svg+xml')
+        .querySelector('svg')!
+    const $path = $shape.querySelector<SVGPathElement>('path')!
+    $path.style.fill = 'var(--color)'
+    $placeholder.replaceWith($shape)
+
+    // set favicon
+    const $icon = document.querySelector<HTMLLinkElement>('link[rel="icon"]')!
+    $icon.href = `/icons/favicon-${color.substring(1)}-${shapeIndex}.ico`
+
+</script>
+
+<style>
+    
+    html { scroll-behavior: smooth }
+
+    html, body { height: 100% }
+
+    body {
+        margin: 0;
+        background-color: #000;
+        color: #fff;
+        font-family: 'Bricolage Grotesque', sans-serif;
+    }
+
+    #app {
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+
+        /* TODO: make better responsiveness */
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+</style>
+
+<style is:global>
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Young Serif', serif;
+        font-weight: normal;
+        letter-spacing: -7%;
+        margin: 0;
+        line-height: 1em;
+    }
+
+    p {
+        text-align: justify;
+        margin: 0;
+    }
+
+    a {
+        color: inherit;
+    }
+
+    button {
+        
+        display: flex;
+        
+        appearance: none;
+        background: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+        font: inherit;
+        color: inherit;
+        text-align: inherit;
+        
+        cursor: pointer;
+    }
+
+</style>

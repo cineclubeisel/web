@@ -1,0 +1,186 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../layouts/Layout.astro";
+import Backdrop from "../components/Backdrop.astro";
+import {
+    IconArrowRight,
+    IconCalendarEvent,
+    IconMapPin,
+    IconTicketOff,
+} from "@tabler/icons-astro";
+import SectionTitle from "../components/SectionTitle.astro";
+import { capitalize } from "../util";
+
+const { title } = Astro.props;
+
+const events = await getCollection("events");
+
+const event = events.toSorted(
+    (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+)[0];
+
+const dtf = new Intl.DateTimeFormat("pt-PT", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+});
+
+const startDate = event.data.date;
+const endDate = new Date(startDate.getTime());
+endDate.setMinutes(endDate.getMinutes() + event.data.duration);
+---
+
+<Layout title={title}>
+    <Backdrop src={event.data.movie.backdrop.src} />
+    <main>
+        <SectionTitle class="event-heading">Próximo evento</SectionTitle>
+        <div class="hero-event">
+            <div
+                class="poster"
+                style={{
+                    backgroundImage: `url('${event.data.movie.poster.src}')`,
+                }}
+            ></div>
+            <div class="info">
+                <h1>
+                    {event.data.movie.title}&nbsp;
+                    <span class="year">({event.data.movie.year})</span>
+                </h1>
+                <div class="date" data-timestamp={event.data.date.getTime()}>
+                    <IconCalendarEvent />
+                    {capitalize(dtf.formatRange(startDate, endDate))}
+                </div>
+                <div class="location">
+                    <IconMapPin />
+                    {event.data.location}, ISEL
+                </div>
+                <div class="price">
+                    <IconTicketOff />
+                    Entrada livre
+                </div>
+                <div class="actions">
+                    <a href={`/evento/${event.id}`} class="btn">
+                        Saber mais
+                        <IconArrowRight />
+                    </a>
+                    {
+                        events.length > 1 && (
+                            <a href="/eventos#arquivo">Ver outros eventos</a>
+                        )
+                    }
+                </div>
+            </div>
+        </div>
+        <slot />
+    </main>
+</Layout>
+
+<style>
+    main {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        padding: 1rem;
+        margin-top: -7rem;
+        gap: 1rem;
+
+        .hero-event {
+            display: flex;
+            gap: 1rem;
+
+            .poster {
+                position: relative;
+
+                /* aspect-ratio: 2 / 3; Doesn't work, applying this with TS */
+                flex-shrink: 0;
+                border-radius: 1rem;
+
+                background-size: cover;
+                background-position: center;
+
+                &::before {
+                    content: "";
+
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: calc(100% - 4px);
+                    height: calc(100% - 4px);
+
+                    border: 2px solid #fff3;
+                    border-radius: 1rem;
+                }
+            }
+
+            .info {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+
+                h1 .year {
+                    color: #fff8;
+                }
+
+                div {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                }
+
+                .actions {
+                    gap: 1rem;
+
+                    .btn {
+                        display: flex;
+                        align-items: center;
+                        gap: 0.5rem;
+
+                        text-decoration: none;
+                        font-weight: bold;
+
+                        border: 2px solid #0003;
+                        background-color: var(--color);
+                        padding: 0.5rem 0.75rem 0.5rem 1rem;
+                        border-radius: 0.75rem;
+
+                        white-space: nowrap;
+                    }
+
+                    & > :not(.btn) {
+                        color: #fff8;
+                    }
+                }
+            }
+        }
+    }
+</style>
+
+<script>
+    const $event = document.querySelector<HTMLDivElement>(".hero-event")!;
+
+    // event header update
+
+    const $eventDate = $event.querySelector<HTMLDivElement>(".date")!;
+    if (Number($eventDate.dataset.timestamp) < Date.now()) {
+        const $eventHeader =
+            document.querySelector<HTMLHeadingElement>(".event-heading")!;
+        $eventHeader.textContent = "Último evento";
+    }
+
+    // event poster
+
+    const POSTER_ASPECT_RATIO = 2 / 3;
+    const $poster = $event.querySelector<HTMLDivElement>(".poster")!;
+    function fixPoster() {
+        const { height } = $poster.getBoundingClientRect();
+        $poster.style.width = `${height * POSTER_ASPECT_RATIO}px`;
+        setTimeout(() => {
+            const { height } = $poster.getBoundingClientRect();
+            $poster.style.width = `${height * POSTER_ASPECT_RATIO}px`;
+        });
+    }
+    addEventListener("resize", fixPoster);
+    fixPoster();
+</script>

@@ -1,0 +1,42 @@
+---
+import Logo from '../assets/logo.svg'
+---
+
+<a class="logo" href="/">
+    <svg/>
+    <Logo/>
+</a>
+
+<style>
+
+    .logo {
+
+        position: relative;
+        width: 5rem;
+        height: 5rem;
+        cursor: pointer;
+
+        svg {
+            position: absolute;
+            top: -9.5rem;
+            left: -9.5rem;
+            width: calc(100% + 9.5rem * 2);
+            height: calc(100% + 9.5rem * 2);
+            pointer-events: none;
+        }
+
+        svg:first-child {
+            transition: rotate .3s, scale .3s;
+            z-index: -1;
+        }
+
+        &:hover {
+            svg:first-child {
+                rotate: 10deg;
+                scale: 1.1;
+            }
+        }
+
+    }
+
+</style>
