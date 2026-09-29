@@ -17,8 +17,8 @@ movie:
     letterboxd: https://letterboxd.com/film/amelie/
     tmdb: https://www.themoviedb.org/movie/194-le-fabuleux-destin-d-amelie-poulain/
     imdb: https://www.imdb.com/title/tt0211915/
-date: 2026-10-16T15:00:00Z
-duration: 150
+date: 2026-10-16T15:15:00Z
+duration: 135
 location: Auditório F
 ---
 
