@@ -18,6 +18,7 @@ const {
         <meta name="generator" content={Astro.generator}/>
         <title>{ title ? `${title} · ` : '' }Cineclube ISEL</title>
         <link rel="icon" type="image/x-icon" href="/favicon.ico">
+        <meta name="theme-color" content="#000000">
 
         <meta name="title" content={ title ?? 'Cineclube ISEL' } />
         <meta name="description" content={ description ?? 'Clube de Cinema do Instituto Superior de Engenharia de Lisboa' } />
@@ -68,6 +69,8 @@ const {
 
     // set color
     document.body.style.setProperty('--color', color)
+    const $themeColor = document.querySelector<HTMLMetaElement>('[name="theme-color"]')!
+    $themeColor.content = color
 
     // set shape
     const $placeholder = document.querySelector<SVGSVGElement>('.logo svg:first-child')!
