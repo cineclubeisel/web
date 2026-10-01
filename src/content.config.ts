@@ -36,7 +36,7 @@ const events = defineCollection({
 
         date: z.coerce.date(),
         duration: z.number().int().positive(),
-        location: z.enum(['Auditório F']),
+        location: z.enum(['Auditório A', 'Auditório F']),
 
         after: z.object({
             attendance: z.number().int().nonnegative(),
