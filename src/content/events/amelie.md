@@ -22,4 +22,4 @@ duration: 135
 location: Auditório A
 ---
 
-Marca já no teu calendário! Vêm aí a sessão pioneira do Cineclube ISEL! “O Fabuloso Destino de Amélie” foi o filme eleito pelos nossos membros que constitui a nossa primeira sessão. Um filme sobre Amélie Poulain, uma jovem tímida parisiense que embarca em missões secretas para melhorar a vida de quem a rodeia com gestos de bondade, mas será que ela terá coragem de sair da sombra? Vem conhecer a Amélie e as suas peripécias na sexta-feira, dia 16 de outubro no Auditório F. Convida os teus amigos!
+Marca já no teu calendário! Vêm aí a sessão pioneira do Cineclube ISEL! “O Fabuloso Destino de Amélie” foi o filme eleito pelos nossos membros que constitui a nossa primeira sessão. Um filme sobre Amélie Poulain, uma jovem tímida parisiense que embarca em missões secretas para melhorar a vida de quem a rodeia com gestos de bondade, mas será que ela terá coragem de sair da sombra? Vem conhecer a Amélie e as suas peripécias na sexta-feira, dia 16 de outubro no Auditório A. Convida os teus amigos!
