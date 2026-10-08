@@ -1,44 +1,56 @@
 ---
-import { IconCalendarWeek, IconFileText, IconHome } from '@tabler/icons-astro'
+import { IconCalendarWeek, IconFileText, IconHome } from "@tabler/icons-astro";
 
-const path = decodeURIComponent(Astro.url.pathname.replace(/\/$/, ''))
+const path = decodeURIComponent(Astro.url.pathname.replace(/\/$/, ""));
 
-const navItems = [
-    { href: '/',            label: 'Início',      icon: IconHome },
-    { href: '/eventos',     label: 'Eventos',     icon: IconCalendarWeek },
+const LINKS = [
+    { href: "/", label: "Início", icon: IconHome },
+    { href: "/eventos", label: "Eventos", icon: IconCalendarWeek },
     // TODO: finish other pages
     // { href: '/publicações', label: 'Publicações', icon: IconNews },
     // { href: '/sobre',       label: 'Sobre',       icon: IconInfoCircle },
     // { href: '/regulamento', label: 'Regulamento', icon: IconFileText },
-    { href: 'https://raw.githubusercontent.com/cineclubeisel/docs/refs/heads/main/Regulamento.pdf', label: 'Regulamento', icon: IconFileText },
-]
+    {
+        href: "https://raw.githubusercontent.com/cineclubeisel/docs/refs/heads/main/Regulamento.pdf",
+        label: "Regulamento",
+        icon: IconFileText,
+    },
+];
 
+const SOCIAL_LINKS = [
+    { href: "https://letterboxd.com/cineclubeisel/", label: "Letterboxd" },
+    { href: "https://www.instagram.com/cineclubeisel/", label: "Instagram" },
+    { href: "https://www.linkedin.com/company/cineclubeisel/", label: "LinkedIn", },
+    { href: "https://github.com/cineclubeisel/", label: "GitHub" },
+];
 ---
 
 <menu class="off">
-    {navItems.map(({ href, label, icon: Icon })=>(
-        <a
-            href={href}
-            class:list={[{
-                active: (path === href) || (href === '/' && path === '')
-            }]}
-            target={ !href.startsWith('/') ? '_blank' : undefined }
-        >
-            <div class="icon"><Icon/></div>
-            {label}
-        </a>
-    ))}
+    {
+        LINKS.map(({ href, label, icon: Icon }) => (
+            <a
+                href={href}
+                class:list={[
+                    {
+                        active: path === href || (href === "/" && path === ""),
+                    },
+                ]}
+                target={!href.startsWith("/") ? "_blank" : undefined}
+            >
+                <div class="icon">
+                    <Icon />
+                </div>
+                {label}
+            </a>
+        ))
+    }
     <div class="socials">
-        <a href="https://www.instagram.com/cineclubeisel/" target="_blank">Instagram</a>
-        <a href="https://www.linkedin.com/company/cineclubeisel/" target="_blank">LinkedIn</a>
-        <a href="https://github.com/cineclubeisel/" target="_blank">GitHub</a>
+        {SOCIAL_LINKS.map(({ href, label }) => <a href={href}>{label}</a>)}
     </div>
 </menu>
 
 <style>
-
     menu {
-
         position: fixed;
         top: 0;
         left: 0;
@@ -50,7 +62,7 @@ const navItems = [
         padding: 1rem;
         padding-top: calc(5rem + 2rem);
         margin: 0;
-        
+
         background-color: var(--color);
         font-size: 1.2rem;
 
@@ -59,12 +71,12 @@ const navItems = [
         left: 50%;
         translate: -50% 0;
 
-        transition: translate .3s;
+        transition: translate 0.3s;
 
         z-index: 1;
 
         &::before {
-            content: '';
+            content: "";
 
             position: absolute;
             top: 100%;
@@ -74,7 +86,6 @@ const navItems = [
 
             background-color: var(--color);
             clip-path: polygon(0 0, 0% 100%, 100% 0);
-
         }
 
         &.off {
@@ -85,7 +96,6 @@ const navItems = [
         }
 
         & > a {
-
             display: flex;
             align-items: center;
             gap: 1rem;
@@ -93,7 +103,6 @@ const navItems = [
             text-decoration: none;
 
             .icon {
-
                 position: relative;
                 display: flex;
 
@@ -101,19 +110,16 @@ const navItems = [
                     width: 2rem;
                     height: 2rem;
                 }
-
             }
 
             &.active {
-
                 font-weight: bold;
 
                 .icon {
-
                     color: var(--color);
 
                     &::before {
-                        content: '';
+                        content: "";
 
                         position: absolute;
                         top: 50%;
@@ -126,13 +132,9 @@ const navItems = [
                         z-index: -1;
 
                         rotate: -10deg;
-
                     }
-
                 }
-
             }
-
         }
 
         .socials {
@@ -140,7 +142,5 @@ const navItems = [
             gap: 1rem;
             color: #ffffffbf;
         }
-
     }
-
 </style>
