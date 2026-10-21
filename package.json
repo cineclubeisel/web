@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "dependencies": {
     "@tabler/icons-astro": "^3.48.0",
-    "astro": "^7.3.5"
+    "astro": "7.4.1"
   },
   "allowScripts": {
     "esbuild": true

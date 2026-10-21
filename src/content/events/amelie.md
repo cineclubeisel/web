@@ -7,8 +7,8 @@ movie:
   genre:
   - comédia
   - romance
-  poster: amelie-poster.webp
-  backdrop: amelie-backdrop.webp
+  poster: ../img/amelie-poster.webp
+  backdrop: ../img/amelie-backdrop.webp
   language:
     audio: fr
     subtitles: pt
