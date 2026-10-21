@@ -3,6 +3,7 @@ import { glob } from 'astro/loaders'
 import { z } from 'astro/zod'
 import iso6391 from './iso-639-1'
 import { AGE_RATINGS, GENRES, keys } from './util'
+import { reference } from 'astro:content'
 
 const events = defineCollection({
     loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/events' }),
@@ -46,4 +47,51 @@ const events = defineCollection({
     })
 })
 
-export const collections = { events }
+const posts = defineCollection({
+    loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/posts' }),
+    schema: ({ image }) => z.object({
+
+        title: z.string(),
+        type: z.enum([ 'Crítica' ]),
+        backdrop: image(),
+        date: z.coerce.date(),
+        author: reference('authors'),
+        rating: z.number().min(0).max(5).multipleOf(.5),
+        spoilers: z.boolean(),
+
+        movie: z.object({
+
+            title: z.string(),
+            year: z.number().int().positive(),
+
+            poster: image(),
+
+            links: z.object({
+                letterboxd: z.url(),
+                tmdb: z.url(),
+                imdb: z.url()
+            })
+
+        }),
+
+    })
+})
+
+const authors = defineCollection({
+    loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/authors' }),
+    schema: ({ image }) => z.object({
+
+        name: z.string(),
+        description: z.string().optional(),
+        img: image().optional(),
+
+        links: z.object({
+            website: z.url().optional(),
+            letterboxd: z.url().optional(),
+            instagram: z.url().optional()
+        }).optional()
+
+    })
+})
+
+export const collections = { events, posts, authors }
