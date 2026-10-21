@@ -22,4 +22,4 @@ duration: 150
 location: Auditório A
 ---
 
-Não podíamos deixar o halloween passar sem fazer uma sessão de terror! Apresentámos o clássico "Alien - O 8.º Passageiro" (1979) realizado por Ridley Scott. Quando uma tripulação responde a um sinal de socorro de um planeta árido, descobre uma criatura alienígena que se reproduz em seres humanos. Agora, a tripulação tem de lutar pela sua sobrevivência e impedir que a criatura chegue ao planeta terra. Apanha este susto connosco na quinta-feira, dia 29 de outubro no Auditório A. Convida os teus amigos mais corajosos!
+Não podíamos deixar o Halloween passar sem fazer uma sessão de terror! Apresentamos o clássico "Alien - O 8.º Passageiro" (1979), realizado por Ridley Scott. Quando a tripulação de uma nave comercial é forçada a investigar um sinal misterioso vindo de uma lua desolada, descobre uma criatura alienígena letal. Agora, os sobreviventes têm de lutar pela vida e impedir que o predador chegue à Terra. Apanha este susto connosco na quinta-feira, dia 29 de outubro, no Auditório A. Convida os teus amigos mais corajosos!
