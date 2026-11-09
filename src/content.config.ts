@@ -38,11 +38,6 @@ const events = defineCollection({
         duration: z.number().int().positive(),
         location: z.enum(['Auditório A', 'Auditório F']),
 
-        after: z.object({
-            attendance: z.number().int().nonnegative(),
-            ratings: z.array(z.number().min(0).max(5).multipleOf(.5))
-        }).optional()
-
     })
 })
 

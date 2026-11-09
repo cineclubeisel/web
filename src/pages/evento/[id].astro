@@ -44,10 +44,6 @@ const startDate = event.data.date;
 const endDate = new Date(startDate.getTime());
 endDate.setMinutes(endDate.getMinutes() + event.data.duration);
 
-const rating = event.data.after
-    ? (event.data.after.ratings.reduce((a, b) => a + b) / event.data.after.ratings.length)
-    : 0
-
 ---
 
 <Layout
@@ -123,22 +119,6 @@ const rating = event.data.after
                     </span>
                 </div>
             </div>
-            { event.data.after && <>
-                <div class="detail">
-                    <IconUsers />
-                    <div>
-                        <h4>Espetadores</h4>
-                        <span>≈ {event.data.after.attendance}</span>
-                    </div>
-                </div>
-                <div class="detail">
-                    <IconStar />
-                    <div>
-                        <h4>Avaliação média</h4>
-                        <span>{rating.toFixed(2)} estrelas</span>
-                    </div>
-                </div>
-            </> }
         </div>
         {event.body && <p>{event.body}</p>}
         {

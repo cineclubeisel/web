@@ -56,11 +56,11 @@ const dtf = new Intl.DateTimeFormat("pt-PT", {
                             <IconCalendarEvent />
                             {capitalize(dtf.formatRange(startDate, endDate))}
                         </div>
-                        <div>
+                        {/* <div>
                             <IconUsers />
                             ≈ {event.data.after!.attendance} espetador
                             {event.data.after!.attendance !== 1 ? "es" : ""}
-                        </div>
+                        </div> */}
                     </div>
                 </a>
             );
