@@ -1,22 +1,22 @@
 ---
 movie:
-  title: O Fabuloso Destino de Amélie
-  year: 2001
-  ageRating: M/12
-  director: Jean-Pierre Jeunet
-  genre:
-  - comédia
-  - romance
-  poster: ../img/amelie-poster.webp
-  backdrop: ../img/amelie-backdrop.webp
-  language:
-    audio: fr
-    subtitles: pt
-  trailer: https://www.youtube.com/embed/x_TGWhzLXis
-  links:
-    letterboxd: https://letterboxd.com/film/amelie/
-    tmdb: https://www.themoviedb.org/movie/194-le-fabuleux-destin-d-amelie-poulain/
-    imdb: https://www.imdb.com/title/tt0211915/
+    title: O Fabuloso Destino de Amélie
+    year: 2001
+    ageRating: M/12
+    director: Jean-Pierre Jeunet
+    genre:
+        - comédia
+        - romance
+    poster: ../img/amelie-poster.webp
+    backdrop: ../img/amelie-backdrop.webp
+    language:
+        audio: fr
+        subtitles: pt
+    trailer: https://www.youtube.com/embed/x_TGWhzLXis
+    links:
+        letterboxd: https://letterboxd.com/film/amelie/
+        tmdb: https://www.themoviedb.org/movie/194-le-fabuleux-destin-d-amelie-poulain/
+        imdb: https://www.imdb.com/title/tt0211915/
 date: 2026-10-16T15:15:00Z
 duration: 135
 location: Auditório A

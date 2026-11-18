@@ -1,8 +1,8 @@
 ---
-import HeroEvent from "../layouts/HeroEvent.astro";
-import benefit1 from "../assets/benefit1.png";
-import benefit2 from "../assets/benefit2.png";
-import benefit3 from "../assets/benefit3.png";
+import benefit1 from '../assets/benefit1.png'
+import benefit2 from '../assets/benefit2.png'
+import benefit3 from '../assets/benefit3.png'
+import HeroEvent from '../layouts/HeroEvent.astro'
 ---
 
 <HeroEvent>
@@ -185,10 +185,10 @@ import benefit3 from "../assets/benefit3.png";
 
     // member card turn
 
-    let timeooutMap = new Map<HTMLDivElement, number>();
+    const timeoutMap = new Map<HTMLDivElement, number>();
 
     function flip($card: HTMLDivElement) {
-        if (timeooutMap.has($card)) clearTimeout(timeooutMap.get($card));
+        if (timeoutMap.has($card)) clearTimeout(timeoutMap.get($card));
 
         $card.classList.toggle("flip");
     }

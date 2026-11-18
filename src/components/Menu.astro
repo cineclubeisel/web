@@ -1,28 +1,28 @@
 ---
-import { IconCalendarWeek, IconFileText, IconHome } from "@tabler/icons-astro";
+import { IconCalendarWeek, IconFileText, IconHome } from '@tabler/icons-astro'
 
-const path = decodeURIComponent(Astro.url.pathname.replace(/\/$/, ""));
+const path = decodeURIComponent(Astro.url.pathname.replace(/\/$/, ''))
 
 const LINKS = [
-    { href: "/", label: "Início", icon: IconHome },
-    { href: "/eventos", label: "Eventos", icon: IconCalendarWeek },
+    { href: '/', label: 'Início', icon: IconHome },
+    { href: '/eventos', label: 'Eventos', icon: IconCalendarWeek },
     // TODO: finish other pages
     // { href: '/publicações', label: 'Publicações', icon: IconNews },
     // { href: '/sobre',       label: 'Sobre',       icon: IconInfoCircle },
     // { href: '/regulamento', label: 'Regulamento', icon: IconFileText },
     {
-        href: "https://raw.githubusercontent.com/cineclubeisel/docs/refs/heads/main/Regulamento.pdf",
-        label: "Regulamento",
+        href: 'https://raw.githubusercontent.com/cineclubeisel/docs/refs/heads/main/Regulamento.pdf',
+        label: 'Regulamento',
         icon: IconFileText,
     },
-];
+]
 
 const SOCIAL_LINKS = [
-    { href: "https://letterboxd.com/cineclubeisel/", label: "Letterboxd" },
-    { href: "https://www.instagram.com/cineclubeisel/", label: "Instagram" },
-    { href: "https://www.linkedin.com/company/cineclubeisel/", label: "LinkedIn", },
-    { href: "https://github.com/cineclubeisel/", label: "GitHub" },
-];
+    { href: 'https://letterboxd.com/cineclubeisel/', label: 'Letterboxd' },
+    { href: 'https://www.instagram.com/cineclubeisel/', label: 'Instagram' },
+    { href: 'https://www.linkedin.com/company/cineclubeisel/', label: 'LinkedIn' },
+    { href: 'https://github.com/cineclubeisel/', label: 'GitHub' },
+]
 ---
 
 <menu class="off">

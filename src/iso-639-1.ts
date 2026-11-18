@@ -1,4 +1,3 @@
-
 export default {
     aa: 'afar',
     ab: 'abcázio',

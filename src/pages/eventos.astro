@@ -1,25 +1,23 @@
 ---
-import { getCollection } from "astro:content";
-import SectionTitle from "../components/SectionTitle.astro";
-import HeroEvent from "../layouts/HeroEvent.astro";
-import { IconCalendarEvent, IconUsers } from "@tabler/icons-astro";
-import { capitalize } from "../util";
+import { getCollection } from 'astro:content'
+import { IconCalendarEvent } from '@tabler/icons-astro'
+import SectionTitle from '../components/SectionTitle.astro'
+import HeroEvent from '../layouts/HeroEvent.astro'
+import { capitalize } from '../util'
 
-const events = await getCollection("events");
+const events = await getCollection('events')
 
-const [, ...archive] = events.toSorted(
-    (a, b) => b.data.date.getTime() - a.data.date.getTime(),
-);
+const [, ...archive] = events.toSorted((a, b) => b.data.date.getTime() - a.data.date.getTime())
 
-const dtf = new Intl.DateTimeFormat("pt-PT", {
-    timeZone: "Europe/Lisbon",
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-});
+const dtf = new Intl.DateTimeFormat('pt-PT', {
+    timeZone: 'Europe/Lisbon',
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+})
 ---
 
 <HeroEvent title="Eventos">
@@ -56,11 +54,6 @@ const dtf = new Intl.DateTimeFormat("pt-PT", {
                             <IconCalendarEvent />
                             {capitalize(dtf.formatRange(startDate, endDate))}
                         </div>
-                        {/* <div>
-                            <IconUsers />
-                            ≈ {event.data.after!.attendance} espetador
-                            {event.data.after!.attendance !== 1 ? "es" : ""}
-                        </div> */}
                     </div>
                 </a>
             );

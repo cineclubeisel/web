@@ -6,39 +6,36 @@ import { AGE_RATINGS, GENRES, keys } from './util'
 
 const events = defineCollection({
     loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/events' }),
-    schema: ({ image }) => z.object({
+    schema: ({ image }) =>
+        z.object({
+            movie: z.object({
+                title: z.string(),
+                year: z.number().int().positive(),
+                ageRating: z.enum(keys(AGE_RATINGS)),
+                director: z.string(),
+                genre: z.array(z.enum(GENRES)),
 
-        movie: z.object({
+                poster: image(),
+                backdrop: image(),
 
-            title: z.string(),
-            year: z.number().int().positive(),
-            ageRating: z.enum(keys(AGE_RATINGS)),
-            director: z.string(),
-            genre: z.array(z.enum(GENRES)),
+                language: z.object({
+                    audio: z.enum(keys(iso6391)),
+                    subtitles: z.enum(keys(iso6391)).optional(),
+                }),
 
-            poster: image(),
-            backdrop: image(),
+                trailer: z.url().optional(),
 
-            language: z.object({
-                audio: z.enum(keys(iso6391)),
-                subtitles: z.enum(keys(iso6391)).optional()
+                links: z.object({
+                    letterboxd: z.url(),
+                    tmdb: z.url(),
+                    imdb: z.url(),
+                }),
             }),
 
-            trailer: z.url().optional(),
-
-            links: z.object({
-                letterboxd: z.url(),
-                tmdb: z.url(),
-                imdb: z.url()
-            })
-
+            date: z.coerce.date(),
+            duration: z.number().int().positive(),
+            location: z.enum(['Auditório A', 'Auditório F']),
         }),
-
-        date: z.coerce.date(),
-        duration: z.number().int().positive(),
-        location: z.enum(['Auditório A', 'Auditório F']),
-
-    })
 })
 
 export const collections = { events }

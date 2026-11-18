@@ -1,14 +1,13 @@
-
-export function keys<T extends string | number | symbol>(obj: Record<T, any>): T[] {
-    return Object.keys(obj) as any
+export function keys<T extends Record<string, unknown>>(obj: T): (keyof T)[] {
+    return Object.keys(obj) as (keyof T)[]
 }
 
-export function capitalize(str: string){
+export function capitalize(str: string) {
     return str[0].toUpperCase() + str.slice(1)
 }
 
 export const AGE_RATINGS = {
-    'A': 'Parcialmente adequado para crianças.',
+    A: 'Parcialmente adequado para crianças.',
     'M/3': 'Para crianças de 3 anos e acima',
     'M/6': 'Para crianças de 6 anos e acima',
     'M/12': 'Para pré-adolescentes de 12 anos e acima',
@@ -18,7 +17,23 @@ export const AGE_RATINGS = {
 } as const
 
 export const GENRES = [
-    'ação', 'animação', 'aventura', 'comédia', 'crime', 'documentário', 'drama',
-    'família', 'fantasia', 'faroeste', 'ficção científica', 'filme de tv', 'guerra',
-    'história', 'mistério', 'música', 'romance', 'terror', 'thriller'
+    'ação',
+    'animação',
+    'aventura',
+    'comédia',
+    'crime',
+    'documentário',
+    'drama',
+    'família',
+    'fantasia',
+    'faroeste',
+    'ficção científica',
+    'filme de tv',
+    'guerra',
+    'história',
+    'mistério',
+    'música',
+    'romance',
+    'terror',
+    'thriller',
 ] as const

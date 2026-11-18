@@ -1,49 +1,46 @@
 ---
-import { getCollection } from "astro:content";
-import Layout from "../../layouts/Layout.astro";
-import Backdrop from "../../components/Backdrop.astro";
-import { IconCalendarEvent, IconLanguage, IconMapPin, IconMasksTheater, IconStar, IconUsers } from "@tabler/icons-astro";
-import iso6391 from "../../iso-639-1";
-import { AGE_RATINGS, capitalize } from "../../util";
+import { getCollection } from 'astro:content'
+import { IconCalendarEvent, IconLanguage, IconMapPin, IconMasksTheater } from '@tabler/icons-astro'
+import Backdrop from '../../components/Backdrop.astro'
+import iso6391 from '../../iso-639-1'
+import Layout from '../../layouts/Layout.astro'
+import { AGE_RATINGS, capitalize } from '../../util'
 
 export async function getStaticPaths() {
-    const events = await getCollection("events");
-    return events.map((event) => ({
+    const events = await getCollection('events')
+    return events.map(event => ({
         params: { id: event.id },
         props: { event },
-    }));
+    }))
 }
 
-const { event } = Astro.props;
+const { event } = Astro.props
 
-const genres = event.data.movie.genre;
-let genreStr: string = genres.at(-1)!;
+const genres = event.data.movie.genre
+let genreStr: string = genres.at(-1)!
 if (genres.length > 1) {
-    genreStr = `${genres.slice(0, genres.length - 1).join(", ")} e ${genreStr}`;
+    genreStr = `${genres.slice(0, genres.length - 1).join(', ')} e ${genreStr}`
 }
 genreStr = capitalize(genreStr)
 
 const lang = {
     audio: iso6391[event.data.movie.language.audio],
-    subtitles: event.data.movie.language.subtitles
-        ? iso6391[event.data.movie.language.subtitles]
-        : undefined,
-};
+    subtitles: event.data.movie.language.subtitles ? iso6391[event.data.movie.language.subtitles] : undefined,
+}
 
-const dtf = new Intl.DateTimeFormat("pt-PT", {
-    timeZone: "Europe/Lisbon",
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-});
+const dtf = new Intl.DateTimeFormat('pt-PT', {
+    timeZone: 'Europe/Lisbon',
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+})
 
-const startDate = event.data.date;
-const endDate = new Date(startDate.getTime());
-endDate.setMinutes(endDate.getMinutes() + event.data.duration);
-
+const startDate = event.data.date
+const endDate = new Date(startDate.getTime())
+endDate.setMinutes(endDate.getMinutes() + event.data.duration)
 ---
 
 <Layout

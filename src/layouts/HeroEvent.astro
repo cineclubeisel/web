@@ -1,36 +1,29 @@
 ---
-import { getCollection } from "astro:content";
-import Layout from "../layouts/Layout.astro";
-import Backdrop from "../components/Backdrop.astro";
-import {
-    IconArrowRight,
-    IconCalendarEvent,
-    IconMapPin,
-    IconTicketOff,
-} from "@tabler/icons-astro";
-import SectionTitle from "../components/SectionTitle.astro";
-import { capitalize } from "../util";
+import { getCollection } from 'astro:content'
+import { IconArrowRight, IconCalendarEvent, IconMapPin, IconTicketOff } from '@tabler/icons-astro'
+import Backdrop from '../components/Backdrop.astro'
+import SectionTitle from '../components/SectionTitle.astro'
+import Layout from '../layouts/Layout.astro'
+import { capitalize } from '../util'
 
-const { title } = Astro.props;
+const { title } = Astro.props
 
-const events = await getCollection("events");
+const events = await getCollection('events')
 
-const event = events.toSorted(
-    (a, b) => b.data.date.getTime() - a.data.date.getTime(),
-)[0];
+const event = events.toSorted((a, b) => b.data.date.getTime() - a.data.date.getTime())[0]
 
-const dtf = new Intl.DateTimeFormat("pt-PT", {
-    timeZone: "Europe/Lisbon",
-    weekday: "long",
-    month: "long",
-    day: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-});
+const dtf = new Intl.DateTimeFormat('pt-PT', {
+    timeZone: 'Europe/Lisbon',
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+})
 
-const startDate = event.data.date;
-const endDate = new Date(startDate.getTime());
-endDate.setMinutes(endDate.getMinutes() + event.data.duration);
+const startDate = event.data.date
+const endDate = new Date(startDate.getTime())
+endDate.setMinutes(endDate.getMinutes() + event.data.duration)
 ---
 
 <Layout title={title}>
